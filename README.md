@@ -1,6 +1,6 @@
 # homebrew-tap
 
-Homebrew formulae for [toki](https://github.com/korjwl1/ddleague-clitrace).
+Homebrew formulae for [toki](https://github.com/korjwl1/toki).
 
 ## Installation
 
