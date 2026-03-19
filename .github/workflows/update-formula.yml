@@ -1,0 +1,76 @@
+name: Update Formula
+
+on:
+  repository_dispatch:
+    types: [update-formula]
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update formula
+        env:
+          TAG: ${{ github.event.client_payload.tag }}
+          REPO: ${{ github.event.client_payload.repo }}
+          SHA_AARCH64_DARWIN: ${{ github.event.client_payload.sha_aarch64_darwin }}
+          SHA_X86_64_DARWIN: ${{ github.event.client_payload.sha_x86_64_darwin }}
+          SHA_AARCH64_LINUX: ${{ github.event.client_payload.sha_aarch64_linux }}
+          SHA_X86_64_LINUX: ${{ github.event.client_payload.sha_x86_64_linux }}
+        run: |
+          VERSION="${TAG#v}"
+
+          cat > Formula/toki.rb << RUBY
+          class Toki < Formula
+            desc "AI CLI tool token usage tracker"
+            homepage "https://github.com/${REPO}"
+            version "${VERSION}"
+            license "FSL-1.1-Apache-2.0"
+
+            on_macos do
+              on_arm do
+                url "https://github.com/${REPO}/releases/download/${TAG}/toki-${VERSION}-aarch64-apple-darwin.tar.gz"
+                sha256 "${SHA_AARCH64_DARWIN}"
+              end
+              on_intel do
+                url "https://github.com/${REPO}/releases/download/${TAG}/toki-${VERSION}-x86_64-apple-darwin.tar.gz"
+                sha256 "${SHA_X86_64_DARWIN}"
+              end
+            end
+
+            on_linux do
+              on_arm do
+                url "https://github.com/${REPO}/releases/download/${TAG}/toki-${VERSION}-aarch64-unknown-linux-gnu.tar.gz"
+                sha256 "${SHA_AARCH64_LINUX}"
+              end
+              on_intel do
+                url "https://github.com/${REPO}/releases/download/${TAG}/toki-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+                sha256 "${SHA_X86_64_LINUX}"
+              end
+            end
+
+            def install
+              bin.install "toki"
+            end
+
+            test do
+              system "#{bin}/toki", "--version"
+            end
+          end
+          RUBY
+
+          sed -i 's/^          //' Formula/toki.rb
+
+      - name: Commit and push
+        run: |
+          VERSION="${TAG#v}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/toki.rb
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Update toki to ${VERSION}"
+          git push
