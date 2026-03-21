@@ -7,22 +7,22 @@ class Toki < Formula
   on_macos do
     on_arm do
       url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.0/toki-1.1.0-aarch64-apple-darwin.tar.gz"
-      sha256 "fba1cdffbb488bbed3d3da14095f85562dfa3b8b63074ef6bc2d07322dbd5005"
+      sha256 "e575c1d290529cbb48ebce912c89f58fd2a0540865af7d296d3d251096dde853"
     end
     on_intel do
       url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.0/toki-1.1.0-x86_64-apple-darwin.tar.gz"
-      sha256 "339325500285541cdddf6abfe0a042f757bcadbb5c686015528834c85111b89a"
+      sha256 "0a3998d2224d2ef24f39a475e3f40f131a6e37a0744a2fae1e676dff53cf31a8"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.0/toki-1.1.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "a98657a6825e75c466b7e6136a149930831694b40c3b58b1195ca5bc2eda84d1"
+      sha256 "9960d5c3c6f0462b37f9189ae32bd6d9ca4d20ad1560eb4df7c6cc2fdd99a02e"
     end
     on_intel do
       url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.0/toki-1.1.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "fd51d68a95db20375efef58b4ef883e93de14d31ce386808a16074179b785200"
+      sha256 "47a8aba27fd0b1bdc034aac1723d8c541ba91f0fbb97bec928bb9180987938ff"
     end
   end
 
