@@ -1,28 +1,28 @@
 class Toki < Formula
   desc "AI CLI tool token usage tracker"
   homepage "https://github.com/korjwl1/toki"
-  version "1.1.3"
+  version "1.1.4"
   license "FSL-1.1-Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.3/toki-1.1.3-aarch64-apple-darwin.tar.gz"
-      sha256 "d687eab72b34bed04d59c0ac48609eb78addf9ef481f4644cf0002e58a9488aa"
+      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.4/toki-1.1.4-aarch64-apple-darwin.tar.gz"
+      sha256 "f7b5c8f46f62a390ec556110176c60763a2cfcac557e2b5dc8db02dbd09264d8"
     end
     on_intel do
-      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.3/toki-1.1.3-x86_64-apple-darwin.tar.gz"
-      sha256 "383be9f2874bcf8ed8feee5058818d478f0fb850a1c71d1a92f481ede2f8b2c2"
+      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.4/toki-1.1.4-x86_64-apple-darwin.tar.gz"
+      sha256 "f90f61a635706e0e6c29df30e8c3ef1ba7a0dc3f6303e3dddd0f70f7e4ac4b47"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.3/toki-1.1.3-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "359e0c7439c81d4527cd371480d03b292805793270f0b6b92347a876ba67cb7f"
+      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.4/toki-1.1.4-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "6054a380a1450fb7f5b4ef2fed7f69444effb36879738f514a7832e709747bb7"
     end
     on_intel do
-      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.3/toki-1.1.3-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "7dc6eade3a50388e2fe048a6e06e0434a4fc141b729ea0332953a9f4563ed410"
+      url "https://github.com/korjwl1/homebrew-tap/releases/download/v1.1.4/toki-1.1.4-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "998af901106ab68f9fd6cb3b99f6990527e946e2edcba9805e1c0530c5fff14d"
     end
   end
 
