@@ -15,6 +15,12 @@ cask "toki-monitor" do
   postflight do
     system_command "/usr/bin/xattr",
                    args: ["-dr", "com.apple.quarantine", "#{appdir}/TokiMonitor.app"]
+    system_command "/usr/bin/killall",
+                   args: ["TokiMonitor"],
+                   must_succeed: false
+    system_command "/usr/bin/open",
+                   args: ["#{appdir}/TokiMonitor.app"],
+                   must_succeed: false
   end
 
   zap trash: [
