@@ -18,6 +18,9 @@ cask "toki-monitor" do
     system_command "/usr/bin/killall",
                    args: ["TokiMonitor"],
                    must_succeed: false
+    system_command "/bin/sleep",
+                   args: ["1"],
+                   must_succeed: false
     system_command "/usr/bin/open",
                    args: ["#{appdir}/TokiMonitor.app"],
                    must_succeed: false
