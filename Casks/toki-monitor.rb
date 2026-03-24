@@ -1,6 +1,6 @@
 cask "toki-monitor" do
-  version "0.1.2-alpha"
-  sha256 "b1a5c919416384cdfd4d374fa42cc35d68479e0117dcd65b3f764915fb77f2e4"
+  version "0.1.2"
+  sha256 "0b65fd786cd7e06f4dcb9e3e09cc7dbdf881886ed691b3c4aee1201253484ebb"
 
   url "https://github.com/korjwl1/homebrew-tap/releases/download/toki-monitor-v#{version}/TokiMonitor-#{version}.zip"
   name "Toki Monitor"
