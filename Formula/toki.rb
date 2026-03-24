@@ -1,28 +1,28 @@
 class Toki < Formula
   desc "AI CLI tool token usage tracker"
   homepage "https://github.com/korjwl1/toki"
-  version "1.1.5"
+  version "1.1.6"
   license "FSL-1.1-Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.5/toki-1.1.5-aarch64-apple-darwin.tar.gz"
-      sha256 "284f31b917def2c492a60ec7726abdee9267a22328a7a2448a552cecb84c6309"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-aarch64-apple-darwin.tar.gz"
+      sha256 "56c32a13da372e778579a8fdecf6d35c2db0e43c8434bfd0180d7f63675decd7"
     end
     on_intel do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.5/toki-1.1.5-x86_64-apple-darwin.tar.gz"
-      sha256 "262110a9231dfcd385e66b80b3df492a10fd80d2e1ce67df26a19558cbc46ad6"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-x86_64-apple-darwin.tar.gz"
+      sha256 "c4e74a68957c33f5abdb39048dce9f0643d18acc4711a0b73c111df1d0340373"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.5/toki-1.1.5-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "ac48cf1d391e43ce99cf477699dcb4e88720d070c2ab20da03a5309f83a70b21"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "6d88156aa7dd22019dc669e485cbbfd64f342d884527979387c576fbc37cd564"
     end
     on_intel do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.5/toki-1.1.5-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "efed99bfc75256a56e14c2e69b355dfe1bdc212c4e13422760f9e0662a275dc6"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "8155218b30f6935a0dea274cc31f1fddc7a4b4b392d9c2310c0defdf133ef1d7"
     end
   end
 
@@ -39,9 +39,7 @@ class Toki < Formula
         begin
           Process.kill(0, pid) # check if alive
           ohai "Stopping old toki daemon..."
-          # Kill directly instead of using old binary (which may be gone)
           Process.kill("TERM", pid)
-          # Wait for process to exit (up to 5s, then SIGKILL)
           exited = false
           10.times do
             sleep 0.5
@@ -54,16 +52,13 @@ class Toki < Formula
             Process.kill("KILL", pid) rescue nil
             sleep 0.5
           end
-          # Clean up stale files
           File.delete(pidfile) if File.exist?(pidfile)
           sock = File.expand_path("~/.config/toki/daemon.sock")
           File.delete(sock) if File.exist?(sock)
-          # Brief pause for DB lock release
           sleep 1
           ohai "Starting toki daemon with new version..."
           system bin/"toki", "daemon", "start"
         rescue Errno::ESRCH
-          # daemon not running, stale pidfile — clean up
           File.delete(pidfile) if File.exist?(pidfile)
         end
       end
