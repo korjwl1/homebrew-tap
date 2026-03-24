@@ -38,10 +38,25 @@ class Toki < Formula
       if pid > 0
         begin
           Process.kill(0, pid) # check if alive
-          ohai "Restarting toki daemon to use the new version..."
-          system bin/"toki", "daemon", "restart"
+          ohai "Stopping old toki daemon..."
+          # Kill directly instead of using old binary (which may be gone)
+          Process.kill("TERM", pid)
+          # Wait for process to exit
+          10.times do
+            break unless begin; Process.kill(0, pid); true; rescue Errno::ESRCH; false; end
+            sleep 0.5
+          end
+          # Clean up stale files
+          File.delete(pidfile) if File.exist?(pidfile)
+          sock = File.expand_path("~/.config/toki/daemon.sock")
+          File.delete(sock) if File.exist?(sock)
+          # Brief pause for DB lock release
+          sleep 1
+          ohai "Starting toki daemon with new version..."
+          system bin/"toki", "daemon", "start"
         rescue Errno::ESRCH
-          # daemon not running, stale pidfile — nothing to do
+          # daemon not running, stale pidfile — clean up
+          File.delete(pidfile) if File.exist?(pidfile)
         end
       end
     end
