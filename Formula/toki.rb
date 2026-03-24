@@ -1,28 +1,28 @@
 class Toki < Formula
   desc "AI CLI tool token usage tracker"
   homepage "https://github.com/korjwl1/toki"
-  version "1.1.6"
+  version "1.1.7"
   license "FSL-1.1-Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-aarch64-apple-darwin.tar.gz"
-      sha256 "56c32a13da372e778579a8fdecf6d35c2db0e43c8434bfd0180d7f63675decd7"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.7/toki-1.1.7-aarch64-apple-darwin.tar.gz"
+      sha256 "70b645d5ae8b5b1b11142e935ba5603ea3d58a970dec94cf172154e3a1de1454"
     end
     on_intel do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-x86_64-apple-darwin.tar.gz"
-      sha256 "c4e74a68957c33f5abdb39048dce9f0643d18acc4711a0b73c111df1d0340373"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.7/toki-1.1.7-x86_64-apple-darwin.tar.gz"
+      sha256 "a0aa9dc553d808913885537b332784beb1598743f7fac6d87aaae3bfb62c7730"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "6d88156aa7dd22019dc669e485cbbfd64f342d884527979387c576fbc37cd564"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.7/toki-1.1.7-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "bef9b6857a0016a4294599073caea60055b21f7ff7a5028666826c385521bda1"
     end
     on_intel do
-      url "https://github.com/korjwl1/toki/releases/download/v1.1.6/toki-1.1.6-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "8155218b30f6935a0dea274cc31f1fddc7a4b4b392d9c2310c0defdf133ef1d7"
+      url "https://github.com/korjwl1/toki/releases/download/v1.1.7/toki-1.1.7-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "2a226bba4fb956aec177ba05c786f636b2d71f5d60e0e1d90049da9632f02453"
     end
   end
 
@@ -31,13 +31,12 @@ class Toki < Formula
   end
 
   def post_install
-    # Restart daemon if it was running (picks up new binary)
     pidfile = File.expand_path("~/.config/toki/daemon.pid")
     if File.exist?(pidfile)
       pid = File.read(pidfile).strip.to_i
       if pid > 0
         begin
-          Process.kill(0, pid) # check if alive
+          Process.kill(0, pid)
           ohai "Stopping old toki daemon..."
           Process.kill("TERM", pid)
           exited = false
