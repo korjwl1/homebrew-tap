@@ -41,9 +41,17 @@ class Toki < Formula
           ohai "Stopping old toki daemon..."
           # Kill directly instead of using old binary (which may be gone)
           Process.kill("TERM", pid)
-          # Wait for process to exit
+          # Wait for process to exit (up to 5s, then SIGKILL)
+          exited = false
           10.times do
-            break unless begin; Process.kill(0, pid); true; rescue Errno::ESRCH; false; end
+            sleep 0.5
+            unless begin; Process.kill(0, pid); true; rescue Errno::ESRCH; false; end
+              exited = true
+              break
+            end
+          end
+          unless exited
+            Process.kill("KILL", pid) rescue nil
             sleep 0.5
           end
           # Clean up stale files
