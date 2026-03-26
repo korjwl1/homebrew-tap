@@ -64,6 +64,35 @@ class Toki < Formula
     end
   end
 
+  def uninstall
+    pidfile = File.expand_path("~/.config/toki/daemon.pid")
+    if File.exist?(pidfile)
+      pid = File.read(pidfile).strip.to_i
+      if pid > 0
+        begin
+          Process.kill(0, pid)
+          ohai "Stopping toki daemon..."
+          Process.kill("TERM", pid)
+          5.times do
+            sleep 0.5
+            unless begin; Process.kill(0, pid); true; rescue Errno::ESRCH; false; end
+              break
+            end
+          end
+          Process.kill("KILL", pid) rescue nil
+        rescue Errno::ESRCH
+          # already dead
+        end
+      end
+    end
+
+    # Clean up runtime files
+    %w[daemon.pid daemon.sock].each do |f|
+      path = File.expand_path("~/.config/toki/#{f}")
+      File.delete(path) if File.exist?(path)
+    end
+  end
+
   test do
     system "#{bin}/toki", "--version"
   end

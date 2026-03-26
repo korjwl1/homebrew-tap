@@ -1,6 +1,6 @@
 cask "toki-monitor" do
   version "0.1.6"
-  sha256 "019c7cd77d5c851a6fb9662a9836918bbcf186ea6e23c211824d0ee6409fbf37"
+  sha256 "9521a57a62e66867e596dd2c694decb641a7402a2404a5d68cc76337190472d1"
 
   url "https://github.com/korjwl1/toki-monitor/releases/download/v#{version}/TokiMonitor-#{version}.zip"
   name "Toki Monitor"
@@ -11,6 +11,8 @@ cask "toki-monitor" do
   depends_on macos: ">= :sonoma"
 
   app "TokiMonitor.app"
+
+  uninstall quit: "com.toki.monitor"
 
   postflight do
     system_command "/usr/bin/xattr",
