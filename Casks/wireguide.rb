@@ -7,7 +7,16 @@ cask "wireguide" do
   desc "Cross-platform WireGuard VPN desktop client"
   homepage "https://github.com/korjwl1/wireguide"
 
+  depends_on macos: ">= :catalina"
+
   app "WireGuide.app"
+
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/WireGuide.app"]
+  end
+
+  uninstall quit: "com.example.wireguide"
 
   zap trash: [
     "~/Library/Application Support/WireGuide",
