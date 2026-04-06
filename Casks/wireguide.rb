@@ -14,6 +14,15 @@ cask "wireguide" do
   postflight do
     system_command "/usr/bin/xattr",
                    args: ["-dr", "com.apple.quarantine", "#{appdir}/WireGuide.app"]
+    system_command "/usr/bin/killall",
+                   args: ["WireGuide"],
+                   must_succeed: false
+    system_command "/bin/sleep",
+                   args: ["1"],
+                   must_succeed: false
+    system_command "/usr/bin/open",
+                   args: ["#{appdir}/WireGuide.app"],
+                   must_succeed: false
   end
 
   uninstall launchctl: "com.wireguide.helper",
