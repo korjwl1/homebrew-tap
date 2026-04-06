@@ -12,42 +12,8 @@ cask "wireguide" do
   app "WireGuide.app"
 
   postflight do
-    # Remove quarantine flag
     system_command "/usr/bin/xattr",
                    args: ["-dr", "com.apple.quarantine", "#{appdir}/WireGuide.app"]
-
-    # Install LaunchDaemon for password-free helper lifecycle.
-    # Copies the binary to /Library/PrivilegedHelperTools/ and the plist
-    # to /Library/LaunchDaemons/, then loads the daemon. After this,
-    # the helper starts at boot and the app never asks for a password.
-    helper_src = "#{appdir}/WireGuide.app/Contents/MacOS/WireGuide"
-    helper_dst = "/Library/PrivilegedHelperTools/com.wireguide.helper"
-    plist_src = "#{staged_path}/WireGuide.app/Contents/Resources/com.wireguide.helper.plist"
-    plist_dst = "/Library/LaunchDaemons/com.wireguide.helper.plist"
-
-    # Copy binary
-    system_command "/bin/cp", args: ["-f", helper_src, helper_dst], sudo: true
-    system_command "/usr/sbin/chown", args: ["root:wheel", helper_dst], sudo: true
-    system_command "/bin/chmod", args: ["755", helper_dst], sudo: true
-
-    # Copy and template plist with current user UID
-    uid = Process.uid.to_s
-    plist_content = File.read("#{appdir}/WireGuide.app/Contents/MacOS/../Resources/com.wireguide.helper.plist") rescue nil
-    if plist_content.nil?
-      # Plist not bundled in Resources — use the one from build/darwin/ via staged_path
-      plist_content = File.read(plist_src) rescue nil
-    end
-    if plist_content
-      plist_content.gsub!("__UID__", uid)
-      File.write("/tmp/com.wireguide.helper.plist", plist_content)
-      system_command "/bin/cp", args: ["-f", "/tmp/com.wireguide.helper.plist", plist_dst], sudo: true
-      system_command "/usr/sbin/chown", args: ["root:wheel", plist_dst], sudo: true
-      system_command "/bin/chmod", args: ["644", plist_dst], sudo: true
-      system_command "/bin/rm", args: ["-f", "/tmp/com.wireguide.helper.plist"]
-    end
-
-    # Load daemon
-    system_command "/bin/launchctl", args: ["load", "-w", plist_dst], sudo: true
   end
 
   uninstall launchctl: "com.wireguide.helper",
