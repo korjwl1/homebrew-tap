@@ -15,7 +15,7 @@ cask "wireguide" do
     system_command "/usr/bin/xattr",
                    args: ["-dr", "com.apple.quarantine", "#{appdir}/WireGuide.app"]
     system_command "/usr/bin/killall",
-                   args: ["WireGuide"],
+                   args: ["wireguide"],
                    must_succeed: false
     system_command "/bin/sleep",
                    args: ["1"],
