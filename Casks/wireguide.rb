@@ -25,17 +25,17 @@ cask "wireguide" do
                    must_succeed: false
   end
 
-  uninstall launchctl: "com.wireguide.helper",
-            quit: "com.example.wireguide",
-            delete: [
-              "/Library/PrivilegedHelperTools/com.wireguide.helper",
-              "/Library/LaunchDaemons/com.wireguide.helper.plist",
-            ]
+  uninstall quit: "com.korjwl1.wireguide"
 
-  zap trash: [
-    "~/Library/Application Support/WireGuide",
-    "~/Library/Preferences/com.example.wireguide.plist",
-    "/var/run/wireguide",
-    "/var/log/wireguide-helper.log",
-  ]
+  zap launchctl: "com.wireguide.helper",
+      delete: [
+        "/Library/PrivilegedHelperTools/com.wireguide.helper",
+        "/Library/LaunchDaemons/com.wireguide.helper.plist",
+      ],
+      trash: [
+        "~/Library/Application Support/WireGuide",
+        "~/Library/Preferences/com.korjwl1.wireguide.plist",
+        "/var/run/wireguide",
+        "/var/log/wireguide-helper.log",
+      ]
 end
