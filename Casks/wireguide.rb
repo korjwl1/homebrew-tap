@@ -1,6 +1,6 @@
 cask "wireguide" do
-  version "0.1.6"
-  sha256 "02e3b7537dc6cf48266e4323db8e0c3b13b75a533b929d8d5af8a05339888def"
+  version "0.1.7"
+  sha256 "f2d80dc03c3011f27ea3503cc4b9b7978876adb9618cb3ef2b6974470f372901"
 
   url "https://github.com/korjwl1/wireguide/releases/download/v#{version}/WireGuide-macOS-arm64.zip"
   name "WireGuide"
