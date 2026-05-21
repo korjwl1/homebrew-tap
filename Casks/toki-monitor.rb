@@ -1,6 +1,6 @@
 cask "toki-monitor" do
-  version "0.2.2"
-  sha256 "b16a43a0baec3e548695311d20d0fb3adf3a0fccef295b113b5e4aa36910a644"
+  version "0.2.3"
+  sha256 "c947363dbb5775d1f596bf78c4d4d2386808a01424f809a7244e0f90521f5998"
 
   url "https://github.com/korjwl1/toki-monitor/releases/download/v#{version}/TokiMonitor-#{version}.zip"
   name "Toki Monitor"
