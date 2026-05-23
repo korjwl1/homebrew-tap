@@ -1,8 +1,8 @@
 cask "wireguide" do
-  version "0.2.0"
-  sha256 "017780b96b4893c8e5beedde644904114bcdf46c89f294feebe151fa2afc1e48"
+  version "0.3.0"
+  sha256 "5ae40b348cd75f9c584ab978353c9e8385df7a626590e388cda8e092a72a8681"
 
-  url "https://github.com/korjwl1/wireguide/releases/download/v#{version}/WireGuide-macOS-arm64.zip"
+  url "https://github.com/korjwl1/wireguide/releases/download/v#{version}/WireGuide-darwin-arm64.zip"
   name "WireGuide"
   desc "Cross-platform WireGuard VPN desktop client"
   homepage "https://github.com/korjwl1/wireguide"
@@ -10,6 +10,14 @@ cask "wireguide" do
   depends_on macos: ">= :catalina"
 
   app "WireGuide.app"
+
+  # auto_updates true tells `brew upgrade` to defer to the
+  # app's own update mechanism, which prevents brew + the
+  # in-app scheduler from racing to upgrade the same install
+  # (the wireguide RunUpdate path also shells out to brew, so
+  # without this flag a user clicking "Update Now" while brew
+  # is auto-upgrading hits a lock contention).
+  auto_updates true
 
   postflight do
     system_command "/usr/bin/xattr",
