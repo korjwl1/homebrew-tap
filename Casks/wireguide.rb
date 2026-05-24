@@ -1,6 +1,6 @@
 cask "wireguide" do
   version "0.3.0"
-  sha256 "5ae40b348cd75f9c584ab978353c9e8385df7a626590e388cda8e092a72a8681"
+  sha256 "1b9afa16d151d1c88c8b69560b275acefbc8a1e90b1be0b4882832f93f659336"
 
   url "https://github.com/korjwl1/wireguide/releases/download/v#{version}/WireGuide-darwin-arm64.zip"
   name "WireGuide"
