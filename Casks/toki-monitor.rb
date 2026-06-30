@@ -10,6 +10,12 @@ cask "toki-monitor" do
   depends_on formula: "korjwl1/tap/toki"
   depends_on macos: ">= :sonoma"
 
+  # The app has its own in-app UpdateChecker. Without this flag `brew upgrade`
+  # and the in-app checker both think they own updates and can race / double-
+  # prompt (the root of the "update window won't close" reports). auto_updates
+  # tells brew the app updates itself, so brew won't fight it.
+  auto_updates true
+
   app "TokiMonitor.app"
 
   uninstall quit: "com.toki.monitor"
