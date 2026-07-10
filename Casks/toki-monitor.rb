@@ -8,7 +8,7 @@ cask "toki-monitor" do
   homepage "https://github.com/korjwl1/toki-monitor"
 
   depends_on formula: "korjwl1/tap/toki"
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   # The app has its own in-app UpdateChecker. Without this flag `brew upgrade`
   # and the in-app checker both think they own updates and can race / double-
