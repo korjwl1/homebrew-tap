@@ -4,6 +4,11 @@ class Toki < Formula
   version "2.1.1"
   license "FSL-1.1-Apache-2.0"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   on_macos do
     on_arm do
       url "https://github.com/korjwl1/toki/releases/download/v2.1.1/toki-2.1.1-aarch64-apple-darwin.tar.gz"
@@ -55,6 +60,21 @@ class Toki < Formula
     # Never let a daemon-restart hiccup fail the whole upgrade; the worst case is
     # a stale daemon the user can restart manually with `toki daemon restart`.
     opoo "toki daemon restart skipped (#{e.message}); run `toki daemon restart` manually"
+  end
+
+  def caveats
+    <<~EOS
+      The toki daemon collects usage in the background. When you run the
+      Toki Monitor app it manages the daemon for you, so no extra setup is
+      needed.
+
+      If you use the CLI on its own (no menu bar app), enable auto-start so
+      the daemon survives reboots:
+
+        toki daemon enable
+
+      Undo it later with `toki daemon disable`.
+    EOS
   end
 
   test do
