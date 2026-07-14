@@ -68,9 +68,10 @@ class Toki < Formula
       Toki Monitor app it manages the daemon for you, so no extra setup is
       needed.
 
-      If you use the CLI on its own (no menu bar app), enable auto-start so
-      the daemon survives reboots:
+      If you use the CLI on its own (no menu bar app), start the daemon now
+      and enable auto-start on login:
 
+        toki daemon start
         toki daemon enable
 
       Undo it later with `toki daemon disable`.

@@ -22,8 +22,6 @@ cask "toki-monitor" do
 
   app "TokiMonitor.app"
 
-  # This postflight is the single owner of the post-upgrade app restart. The
-  # app's own in-app updater delegates its restart here so the two don't race.
   postflight do
     # Clear the quarantine flag so Gatekeeper doesn't block the freshly
     # downloaded bundle. must_succeed: false — a missing attribute is fine and
@@ -31,27 +29,12 @@ cask "toki-monitor" do
     system_command "/usr/bin/xattr",
                    args:         ["-dr", "com.apple.quarantine", "#{appdir}/TokiMonitor.app"],
                    must_succeed: false
-
-    # Only relaunch if the app was already running. `brew upgrade` swaps the
-    # bundle without killing the process, so a live process here means the user
-    # had it open and expects it back on the new version. If it wasn't running,
-    # leave it closed instead of launching an app they didn't ask for.
-    was_running = system_command("/usr/bin/pgrep",
-                                 args:         ["-x", "TokiMonitor"],
-                                 must_succeed: false).exit_status.zero?
-    next unless was_running
-
-    system_command "/usr/bin/killall",
-                   args:         ["TokiMonitor"],
-                   must_succeed: false
-    system_command "/bin/sleep",
-                   args:         ["1"],
-                   must_succeed: false
-    system_command "/usr/bin/open",
-                   args:         ["#{appdir}/TokiMonitor.app"],
-                   must_succeed: false
   end
 
+  # `uninstall quit` is the single owner of the upgrade restart: brew quits the
+  # app by bundle id before swapping the bundle and reopens it afterwards only
+  # if it was running (and respects `--no-quit`). The app's in-app updater
+  # delegates its restart here so the two don't race.
   uninstall quit: "com.toki.monitor"
 
   zap trash: "~/Library/Preferences/com.toki.monitor.plist"
