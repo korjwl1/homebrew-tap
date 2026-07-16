@@ -1,6 +1,6 @@
 cask "wireguide" do
-  version "0.3.1"
-  sha256 "0b257d6826f8c9f124507821ceea369d972d5d9b17a3f6c133f013007679965d"
+  version "0.4.0"
+  sha256 "58fac8897eab924518d1720cf23d72d345f80e4a1970b18d2c6e5f6e49c2dd71"
 
   url "https://github.com/korjwl1/wireguide/releases/download/v#{version}/WireGuide-darwin-arm64.zip"
   name "WireGuide"
@@ -10,6 +10,11 @@ cask "wireguide" do
   depends_on macos: :catalina
 
   app "WireGuide.app"
+
+  # Symlink the CLI onto PATH (Homebrew's bin), so users get a
+  # global `wireguide ctl ...` after `brew install` instead of
+  # the in-bundle `/Applications/WireGuide.app/Contents/MacOS/wireguide`.
+  binary "#{appdir}/WireGuide.app/Contents/MacOS/wireguide"
 
   # auto_updates true tells `brew upgrade` to defer to the
   # app's own update mechanism, which prevents brew + the
