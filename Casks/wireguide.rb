@@ -1,13 +1,13 @@
 cask "wireguide" do
-  version "0.4.0"
-  sha256 "58fac8897eab924518d1720cf23d72d345f80e4a1970b18d2c6e5f6e49c2dd71"
+  version "0.4.1"
+  sha256 "374def00903d3c3de8bf61244e5ce0f13a46f27d9cf8129f66a4492808376d4f"
 
   url "https://github.com/korjwl1/wireguide/releases/download/v#{version}/WireGuide-darwin-arm64.zip"
   name "WireGuide"
   desc "Cross-platform WireGuard VPN desktop client"
   homepage "https://github.com/korjwl1/wireguide"
 
-  depends_on macos: :catalina
+  depends_on macos: ">= :catalina"
 
   app "WireGuide.app"
 
