@@ -7,7 +7,7 @@ cask "wireguide" do
   desc "Cross-platform WireGuard VPN desktop client"
   homepage "https://github.com/korjwl1/wireguide"
 
-  depends_on macos: ">= :catalina"
+  depends_on macos: :catalina
 
   app "WireGuide.app"
 
