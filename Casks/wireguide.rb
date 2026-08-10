@@ -16,13 +16,14 @@ cask "wireguide" do
   # the in-bundle `/Applications/WireGuide.app/Contents/MacOS/wireguide`.
   binary "#{appdir}/WireGuide.app/Contents/MacOS/wireguide"
 
-  # auto_updates true tells `brew upgrade` to defer to the
-  # app's own update mechanism, which prevents brew + the
-  # in-app scheduler from racing to upgrade the same install
-  # (the wireguide RunUpdate path also shells out to brew, so
-  # without this flag a user clicking "Update Now" while brew
-  # is auto-upgrading hits a lock contention).
-  auto_updates true
+  # NOTE: deliberately NOT auto_updates. The app has no self-updater
+  # (its in-app "Update Now" shells out to brew), so the flag's only
+  # real effect was making `brew upgrade` skip this cask — and on older
+  # Homebrew even a named `brew upgrade wireguide` skipped it with exit
+  # 0, stranding installs on old versions while reporting success
+  # (korjwl1/wireguide#38: an install pinned at 0.3.1 for three months).
+  # Brew's own lock handles concurrent upgrade attempts; re-add the flag
+  # only if the app ever ships a real self-updater.
 
   postflight do
     system_command "/usr/bin/xattr",
