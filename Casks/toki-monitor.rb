@@ -7,6 +7,9 @@ cask "toki-monitor" do
   desc "Menu bar AI token usage monitor powered by toki TSDB engine"
   homepage "https://github.com/korjwl1/toki-monitor"
 
+  depends_on formula: "korjwl1/tap/toki"
+  depends_on macos: :sonoma
+  
   livecheck do
     url :url
     strategy :github_latest
