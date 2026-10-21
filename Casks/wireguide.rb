@@ -1,6 +1,6 @@
 cask "wireguide" do
-  version "0.5.2"
-  sha256 "2843d5fc5dcfad422665d41680013dd87a9c33f4804536f56c0a6c4834287958"
+  version "0.6.0"
+  sha256 "85b838a22e9af82c33058ee07c8f2e08afd7c5bc50f87f695b79fcf812020262"
 
   url "https://github.com/korjwl1/wireguide/releases/download/v#{version}/WireGuide-darwin-arm64.zip"
   name "WireGuide"
@@ -8,7 +8,7 @@ cask "wireguide" do
   homepage "https://github.com/korjwl1/wireguide"
 
   depends_on arch: :arm64
-  depends_on macos: :big_sur
+  depends_on macos: :monterey
 
   app "WireGuide.app"
 
@@ -37,6 +37,8 @@ cask "wireguide" do
       delete: [
         "/Library/PrivilegedHelperTools/com.wireguide.helper",
         "/Library/LaunchDaemons/com.wireguide.helper.plist",
+        "/var/run/com.wireguide.helper.sock",
+        "/Library/Application Support/wireguide/pf-was-enabled",
       ],
       trash: [
         "~/Library/Application Support/WireGuide",
